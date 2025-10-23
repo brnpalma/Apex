@@ -17,8 +17,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Application\AuthApex.Application.csproj" />
-  </ItemGroup>
-
 </Project>
