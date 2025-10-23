@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WebApis",
+    "Projects": [
+      {
+        "Path": "AuthApex\\src\\AuthApex.WebApi\\AuthApex.WebApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "TransportApex\\src\\TransportApex.WebApi\\TransportApex.WebApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
