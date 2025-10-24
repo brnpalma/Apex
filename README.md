@@ -4,10 +4,8 @@ A Apex Transport API é uma solução modular voltada para gestão de entregas e
 
 Assim como no automobilismo, a Apex busca o ponto ideal entre velocidade, precisão e estabilidade, oferecendo uma estrutura limpa, eficiente, testável, escalável e ótima manutenibilidade para o domínio de entregas.
 
----
 
 ## Visão Geral  
-.
 
 Ela fornece uma base sólida e escalável para operações de autenticação, cadastro de usuários, gerenciamento de fornecedores e controle logístico, garantindo segurança, performance e precisão em cada requisição.
 
