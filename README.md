@@ -5,8 +5,8 @@ A **Apex Transport API** é uma solução modular voltada para **gestão de entr
 🏎️ Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, precisão e estabilidade**, oferecendo uma estrutura **limpa, eficiente, testável e altamente manutenível** para o domínio de entregas.
 
 ## 🔗 Rotas Importantes
-- Swagger (UI padrão): `https://localhost:5002/swagger` ou `http://localhost:5003/swagger`
-- (Opcional) UI alternativa Scalar: `https://localhost:5002/scalar` ou `http://localhost:5003/scalar`
+- Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger) ou [http://localhost:5000/swagger](http://localhost:5000/swagger)
+- (Opcional) UI alternativa Scalar: [https://localhost:5001/scalar](https://localhost:5001/scalar) ou [http://localhost:5000/scalar](http://localhost:5000/scalar)
 
 ---
 
