@@ -42,7 +42,7 @@ app.MapOpenApi();
 app.MapScalarApiReference("/scalar", options =>
 {
     options.Title = Constantes.ApiTitle;
-    options.Theme = ScalarTheme.Kepler;
+    options.Theme = ScalarTheme.Laserwave;
 });
 
 app.MapControllers();
