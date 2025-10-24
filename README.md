@@ -1,13 +1,17 @@
-# Apex
+# Apex Transport API - O ponto ideal entre velocidade, precisão e entrega.
 
-Este repositório contém o projeto **Apex** desenvolvido com arquitetura limpa (Clean Architecture) em C#.  
-A ideia é manter separação de responsabilidades entre camadas, facilitar testabilidade, manutenibilidade e escalabilidade.
+A Apex Transport API é uma solução modular voltada para gestão de entregas e transportadores, desenvolvida com Clean Architecture em .NET projetada para evoluir com composição de camadas e dependências invertidas.
+
+Assim como no automobilismo, a Apex busca o ponto ideal entre velocidade, precisão e estabilidade, oferecendo uma estrutura limpa, eficiente, testável, escalável e ótima manutenibilidade para o domínio de entregas.
 
 ---
 
 ## Visão Geral  
-O objetivo do projeto é servir como base para aplicações em que se queira aplicar os princípios da Clean Architecture, organizando código em camadas como Domínio, Aplicação, Infraestrutura, Transporte e UI (ou API).  
-Ele segue uma estrutura modularizada, projetada para evoluir com composição de camadas e dependências invertidas.
+.
+
+Ela fornece uma base sólida e escalável para operações de autenticação, cadastro de usuários, gerenciamento de fornecedores e controle logístico, garantindo segurança, performance e precisão em cada requisição.
+
+O projeto é dividido em microsserviços independentes — como o AuthApex API (responsável por autenticação e geração de tokens JWT) e o TransportApex API (responsável por fornecedores, rotas e entregas) — permitindo evolução contínua sem comprometer a integridade da aplicação.
 
 ---
 
