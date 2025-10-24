@@ -9,6 +9,16 @@ namespace AuthApex.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>(builder =>
+            {
+                builder.OwnsOne(u => u.Email, email =>
+                {
+                    email.Property(e => e.Endereco)
+                         .HasColumnName("Email")
+                         .IsRequired();
+                });
+            });
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }

@@ -15,7 +15,7 @@ namespace AuthApex.Infrastructure.Repositories
         }
 
         public async Task<Usuario> ObterPorEmailAsync(string email) =>
-            await _dbContext.Usuarios.SingleOrDefaultAsync(u => u.Email == email);
+            await _dbContext.Usuarios.SingleOrDefaultAsync(u => u.Email.Endereco == email);
 
         public async Task AdicionarAsync(Usuario usuario)
         {
@@ -24,6 +24,6 @@ namespace AuthApex.Infrastructure.Repositories
         }
 
         public async Task<bool> ExistePorEmailAsync(string email) =>
-            await _dbContext.Usuarios.AnyAsync(u => u.Email == email);
+            await _dbContext.Usuarios.AnyAsync(u => u.Email.Endereco == email);
     }
 }

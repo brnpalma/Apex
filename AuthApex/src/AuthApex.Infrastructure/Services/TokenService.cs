@@ -21,7 +21,7 @@ namespace AuthApex.Infrastructure.Services
                 Subject = new ClaimsIdentity(
                 [
                     new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                    new Claim(ClaimTypes.Email, usuario.Email)
+                    new Claim(ClaimTypes.Email, usuario.Email.Endereco)
                 ]),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

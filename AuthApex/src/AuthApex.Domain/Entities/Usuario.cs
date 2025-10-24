@@ -1,9 +1,11 @@
-﻿namespace AuthApex.Domain.Entities
+﻿using AuthApex.Domain.ValueObjects;
+
+namespace AuthApex.Domain.Entities
 {
     public class Usuario
     {
         public int Id { get; set; }
         public string PasswordHash { get; set; }
-        public string Email { get; set; }
+        public Email Email { get; set; }
     }
 }

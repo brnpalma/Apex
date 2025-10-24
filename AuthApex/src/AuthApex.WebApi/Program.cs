@@ -3,6 +3,7 @@ using AuthApex.Application.Common.Constants;
 using AuthApex.Infrastructure;
 using AuthApex.Infrastructure.Persistence;
 using AuthApex.WebApi;
+using AuthApex.WebApi.Middleware;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.AddInfrastructureServices();
 builder.AddWebServices();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {

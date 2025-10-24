@@ -1,6 +1,7 @@
 ﻿using AuthApex.Application.Auth.Dtos;
 using AuthApex.Application.Common.Interfaces;
 using AuthApex.Domain.Entities;
+using AuthApex.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthApex.Application.Auth.Services
@@ -18,7 +19,7 @@ namespace AuthApex.Application.Auth.Services
             if (await _usuarioRepository.ExistePorEmailAsync(email))
                 throw new Exception("Usuário já existe");
 
-            var usuario = new Usuario { Email = email };
+            var usuario = new Usuario { Email = new Email(email) };
             usuario.PasswordHash = _passwordHasher.HashPassword(usuario, senha);
 
             await _usuarioRepository.AdicionarAsync(usuario);
@@ -26,7 +27,7 @@ namespace AuthApex.Application.Auth.Services
             return new CadastrarUsuarioResultDto
             {
                 IdUsuario = usuario.Id.ToString(),
-                Email = usuario.Email
+                Email = usuario.Email.Endereco
             };
         }
 
@@ -42,7 +43,7 @@ namespace AuthApex.Application.Auth.Services
             return new LoginResultDto
             {
                 Token = token,
-                Email = usuario.Email
+                Email = usuario.Email.Endereco
             };
         }
 
