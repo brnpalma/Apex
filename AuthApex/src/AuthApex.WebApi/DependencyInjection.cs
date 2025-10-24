@@ -20,7 +20,7 @@ public static class DependencyInjection
 
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthApex API", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = Constantes.ApiTitle, Version = "v1" });
 
             // JWT configuration
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
