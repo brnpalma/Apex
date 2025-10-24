@@ -30,7 +30,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Swagger na raiz
 app.UseSwagger();
 
 app.UseSwaggerUI(c =>
@@ -39,7 +38,6 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-// UI alternativa com Scalar.AspNetCore em /swagger-scalar
 app.MapOpenApi();
 app.MapScalarApiReference("/scalar", options =>
 {

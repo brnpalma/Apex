@@ -24,7 +24,6 @@ public static class DependencyInjection
         builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 
-        // Customise default API behaviour
         builder.Services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
@@ -34,7 +33,6 @@ public static class DependencyInjection
         {
             configure.Title = "TransportApex API";
 
-            // Add JWT
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
             {
                 Type = OpenApiSecuritySchemeType.ApiKey,
