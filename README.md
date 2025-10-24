@@ -1,8 +1,8 @@
-# 🚀 Apex Transport API — O ponto ideal entre velocidade, precisão e entrega
+# 🏎️ Apex Transport API
 
-A **Apex Transport API** é uma solução modular voltada para **gestão de entregas e transportadores**, desenvolvida com **Clean Architecture em .NET**, projetada para escalar com **camadas independentes e dependências invertidas**.
+Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, precisão e estabilidade**, oferecendo uma estrutura **limpa, eficiente, testável e altamente manutenível** para o domínio de entregas. 
 
-🏎️ Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, precisão e estabilidade**, oferecendo uma estrutura **limpa, eficiente, testável e altamente manutenível** para o domínio de entregas.
+Uma solução modular voltada para **gestão de entregas e transportadores**, desenvolvida com **Clean Architecture em .NET**, projetada para escalar com **camadas independentes e dependências invertidas**.
 
 ## 🔗 Rotas Importantes
 - Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger)
