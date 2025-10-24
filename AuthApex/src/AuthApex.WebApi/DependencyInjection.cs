@@ -1,4 +1,5 @@
-﻿using Azure.Identity;
+﻿using AuthApex.Application.Common.Constants;
+using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -41,6 +42,20 @@ public static class DependencyInjection
                     },
                     Array.Empty<string>()
                 }
+            });
+        });
+
+        builder.Services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new()
+                {
+                    Title = Constantes.ApiTitle,
+                    Version = Constantes.ApiVersion,
+                    Description = Constantes.ApiDescription
+                };
+                return Task.CompletedTask;
             });
         });
     }

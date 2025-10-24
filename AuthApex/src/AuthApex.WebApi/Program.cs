@@ -1,7 +1,9 @@
 ﻿using AuthApex.Application;
+using AuthApex.Application.Common.Constants;
 using AuthApex.Infrastructure;
 using AuthApex.Infrastructure.Persistence;
 using AuthApex.WebApi;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +35,16 @@ app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthApex API v1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", Constantes.ApiTitle);
     c.RoutePrefix = "swagger";
+});
+
+// UI alternativa com Scalar.AspNetCore em /swagger-scalar
+app.MapOpenApi();
+app.MapScalarApiReference("/scalar", options =>
+{
+    options.Title = Constantes.ApiTitle;
+    options.Theme = ScalarTheme.Kepler;
 });
 
 app.MapControllers();
