@@ -22,4 +22,8 @@
     <ProjectReference Include="..\AuthApex.Application\AuthApex.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Configurations\" />
+  </ItemGroup>
+
 </Project>

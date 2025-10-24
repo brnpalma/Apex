@@ -2,7 +2,6 @@ using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace TransportApex.Infrastructure.Identity;
 

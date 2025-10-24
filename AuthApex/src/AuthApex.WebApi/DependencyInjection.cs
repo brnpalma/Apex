@@ -1,11 +1,6 @@
 ﻿using Azure.Identity;
-using AuthApex.Application.Common.Interfaces;
-using AuthApex.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using NSwag;
-using NSwag.Generation.Processors.Security;
-using AuthApex.WebApi.Services;
-using AuthApex.WebApi.Extensions;
+using Microsoft.OpenApi.Models;
 
 namespace AuthApex.WebApi;
 
@@ -15,35 +10,36 @@ public static class DependencyInjection
     {
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddScoped<IUser, CurrentUser>();
-
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
 
-        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
-
-        // Customise default API behaviour
         builder.Services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
-        builder.Services.AddEndpointsApiExplorer();
-
-        builder.Services.AddOpenApiDocument((configure, sp) =>
+        builder.Services.AddSwaggerGen(c =>
         {
-            configure.Title = "AuthApex API";
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthApex API", Version = "v1" });
 
-            // Add JWT
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            // JWT configuration
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Type = OpenApiSecuritySchemeType.ApiKey,
                 Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira seu token JWT no campo abaixo."
             });
 
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
     }
 

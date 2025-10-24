@@ -16,8 +16,8 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("TransportApexDb");
-        Guard.Against.Null(connectionString, message: "Connection string 'TransportApexDb' not found.");
+        var connectionString = builder.Configuration.GetConnectionString("ApexDb");
+        Guard.Against.Null(connectionString, message: "Connection string 'ApexDb' not found.");
 
         builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();

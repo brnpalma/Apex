@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using TransportApex.WebApi.Services;
-using TransportApex.WebApi.Extensions;
 
 namespace TransportApex.WebApi;
 

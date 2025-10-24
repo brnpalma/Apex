@@ -2,7 +2,6 @@ using TransportApex.Application;
 using TransportApex.Infrastructure;
 using TransportApex.Infrastructure.Data;
 using TransportApex.WebApi;
-using TransportApex.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,8 +38,6 @@ app.UseSwaggerUi(settings =>
 app.UseExceptionHandler(options => { });
 
 app.Map("/", () => Results.Redirect("/api"));
-
-app.MapEndpoints();
 
 app.Run();
 

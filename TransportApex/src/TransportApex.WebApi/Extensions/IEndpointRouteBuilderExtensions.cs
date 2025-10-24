@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using TransportApex.WebApi.Extensions;
 
 namespace TransportApex.WebApi.Extensions;
 
