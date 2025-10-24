@@ -1,4 +1,4 @@
-using AuthApex.Application;
+﻿using AuthApex.Application;
 using AuthApex.Infrastructure;
 using AuthApex.Infrastructure.Persistence;
 using AuthApex.WebApi;
@@ -30,6 +30,12 @@ app.UseAuthorization();
 
 // Swagger na raiz
 app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthApex API v1");
+    c.RoutePrefix = "swagger";
+});
 
 app.MapControllers();
 
