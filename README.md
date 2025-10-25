@@ -57,40 +57,30 @@ Essa separação permite **evolução contínua** sem comprometer a integridade 
 ```text
 Apex/
 ├─ AuthApex/
-│  └─ … (projeto relacionado à autenticação)
+│  ├─ src/
+│  │  ├─ AuthApex.Domain/
+│  │  ├─ AuthApex.Application/
+│  │  ├─ AuthApex.Infrastructure/
+│  │  └─ AuthApex.WebApi/
+│  └─ tests/
+│     ├─ AuthApex.Domain.UnitTests/
+│     ├─ AuthApex.Application.UnitTests/
+│     ├─ AuthApex.Application.FunctionalTests/
+│     └─ AuthApex.Infrastructure.IntegrationTests/
 ├─ TransportApex/
-│  └─ … (projeto relacionado ao transporte ou API)
+│  ├─ src/
+│  │  ├─ TransportApex.Domain/
+│  │  ├─ TransportApex.Application/
+│  │  ├─ TransportApex.Infrastructure/
+│  │  └─ TransportApex.WebApi/
+│  └─ tests/
+│     ├─ TransportApex.Domain.UnitTests/
+│     ├─ TransportApex.Application.UnitTests/
+│     ├─ TransportApex.Application.FunctionalTests/
+│     └─ TransportApex.Infrastructure.IntegrationTests/
 ├─ Apex.sln
-├─ Apex.slnLaunch
-├─ .gitignore
-└─ .gitattributes
+└─ README.md
 ```
-
-> 💡 Recomenda-se detalhar internamente cada microsserviço (ex: Domain, Application, Infrastructure, UI).  
-
-**Exemplo completo:**
-```text
-Apex/
-├─ AuthApex/
-│   ├─ Domain/
-│   │   └─ Entities/
-│   ├─ Application/
-│   │   ├─ Interfaces/
-│   │   └─ UseCases/
-│   ├─ Infrastructure/
-│   │   ├─ Repositories/
-│   │   └─ DataContext/
-│   └─ API/
-│       ├─ Controllers/
-│       └─ Models/
-├─ TransportApex/
-│   ├─ Domain/
-│   ├─ Application/
-│   ├─ Infrastructure/
-│   └─ API/
-└─ Apex.sln
-```
-
 
 ## 🏃‍♂️ Como Executar  
 
