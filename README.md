@@ -10,6 +10,12 @@ Uma solução modular voltada para **gestão de entregas e transportadores**, de
 
 ---
 
+## 🛠️ Setup automático
+
+Ao executar a aplicação (`dotnet run`), o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais como `dotnet ef database update` — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional.
+
+---
+
 ## 🧭 Visão Geral  
 
 A API fornece uma base sólida para operações de **autenticação, cadastro de usuários, gerenciamento de fornecedores e controle logístico**, garantindo **segurança, performance e confiabilidade** em cada requisição.
