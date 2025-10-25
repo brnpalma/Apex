@@ -1,4 +1,7 @@
-﻿using Apex.Shared.Results;
+﻿using Apex.Shared.Constants;
+using Apex.Shared.Enums;
+using Apex.Shared.Results;
+using System.Data;
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.Dtos.Entregas;
 using TransportApex.Domain.Entities;
@@ -12,8 +15,13 @@ namespace TransportApex.Application.UseCases.Entregas.Services
         private readonly IFornecedorRepository _fornecedorRepository = fornecedorRepository;
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
-        public async Task<Result<EntregaDto>> RegistrarEntregaAsync(long fornecedorId, long produtoId)
+        public async Task<Result<EntregaDto>> RegistrarEntregaAsync(long fornecedorId, long produtoId, string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<EntregaDto>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             var fornecedor = await _fornecedorRepository.ObterPorIdAsync(fornecedorId);
 
             if (fornecedor is null)
@@ -41,8 +49,13 @@ namespace TransportApex.Application.UseCases.Entregas.Services
             return Result<EntregaDto>.Ok(entregaDto, 201);
         }
 
-        public async Task<Result<IEnumerable<ListaEntregaDto>>> ListarAsync()
+        public async Task<Result<IEnumerable<ListaEntregaDto>>> ListarAsync(string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<IEnumerable<ListaEntregaDto>>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             var entregas = await _entregaRepository.ObterTodasAsync();
 
             var entregasDto = entregas

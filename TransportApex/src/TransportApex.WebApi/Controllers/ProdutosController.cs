@@ -39,12 +39,12 @@ namespace TransportApex.WebApi.Controllers
         {
             var result = await _sender.Send(new ListarProdutosRequest());
 
-            if (!result.Data.Any())
-            {
-                return Ok(new { Mensagem = "Nenhum produto cadastrado.", });
-            }
+            if (result.Data is null)
+                return StatusCode(result.Status, result);
 
-            return StatusCode(result.Status, result.Data is null ? result : result.Data);
+            return result.Data.Any()
+                ? StatusCode(result.Status, result.Data)
+                : Ok(new { Mensagem = "Nenhum produto cadastrado." });
         }
     }
 }

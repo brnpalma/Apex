@@ -2,6 +2,7 @@
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.UseCases.Entregas.Services;
 using TransportApex.Domain.Entities;
+using Apex.Shared.Enums;
 
 namespace TransportApex.Application.UnitTests
 {
@@ -28,7 +29,7 @@ namespace TransportApex.Application.UnitTests
         {
             _fornecedorRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<long>())).ReturnsAsync((Fornecedor?)null);
 
-            var result = await _service.RegistrarEntregaAsync(1, 1);
+            var result = await _service.RegistrarEntregaAsync(1, 1, "1", Role.Admin);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(404, result.Status);
@@ -41,7 +42,7 @@ namespace TransportApex.Application.UnitTests
             _fornecedorRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<long>())).ReturnsAsync(fornecedor);
             _produtoRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<long>())).ReturnsAsync((Produto?)null);
 
-            var result = await _service.RegistrarEntregaAsync(1, 2);
+            var result = await _service.RegistrarEntregaAsync(1, 2, "1", Role.Admin);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(404, result.Status);
@@ -60,7 +61,7 @@ namespace TransportApex.Application.UnitTests
                 .Callback<Entrega>(e => e.Id = 100)
                 .Returns(Task.CompletedTask);
 
-            var result = await _service.RegistrarEntregaAsync(fornecedor.Id, produto.Id);
+            var result = await _service.RegistrarEntregaAsync(fornecedor.Id, produto.Id, "user-1", Role.Admin);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(201, result.Status);
@@ -85,7 +86,7 @@ namespace TransportApex.Application.UnitTests
 
             _entregaRepo.Setup(r => r.ObterTodasAsync()).ReturnsAsync(new List<Entrega> { e1, e2 });
 
-            var result = await _service.ListarAsync();
+            var result = await _service.ListarAsync("user-1", Role.Admin);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(200, result.Status);

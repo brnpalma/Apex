@@ -1,16 +1,24 @@
-﻿using Apex.Shared.Results;
+﻿using Apex.Shared.Constants;
+using Apex.Shared.Enums;
+using Apex.Shared.Results;
+using System.Data;
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.Dtos.Produtos;
 using TransportApex.Domain.Entities;
 
-namespace TransportApex.Application.UseCases.Entregas.Services
+namespace TransportApex.Application.UseCases.Produtos.Services
 {
     public class ProdutoService(IProdutoRepository produtoRepository) : IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
-        public async Task<Result<ProdutoDto>> CadastrarAsync(string descricao, decimal peso)
+        public async Task<Result<ProdutoDto>> CadastrarAsync(string descricao, decimal peso, string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<ProdutoDto>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             if (await _produtoRepository.ExistePorNomeAsync(descricao))
                 return Result<ProdutoDto>.Fail(400, "Já existe um produto com este nome.", null);
 
@@ -33,8 +41,13 @@ namespace TransportApex.Application.UseCases.Entregas.Services
             return Result<ProdutoDto>.Ok(produtoDto, 201);
         }
 
-        public async Task<Result<IEnumerable<ListaProdutoDto>>> ListarAsync()
+        public async Task<Result<IEnumerable<ListaProdutoDto>>> ListarAsync(string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<IEnumerable<ListaProdutoDto>>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             var produtos = await _produtoRepository.ObterTodosAsync();
 
             var produtosDto = produtos

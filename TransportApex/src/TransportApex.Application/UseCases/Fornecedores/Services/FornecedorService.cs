@@ -1,4 +1,7 @@
-﻿using Apex.Shared.Results;
+﻿using Apex.Shared.Constants;
+using Apex.Shared.Enums;
+using Apex.Shared.Results;
+using System.Data;
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.Dtos.Fornecedores;
 using TransportApex.Domain.Entities;
@@ -10,8 +13,13 @@ namespace TransportApex.Application.UseCases.Fornecedores.Services
     {
         private readonly IFornecedorRepository _fornecedorRepository = fornecedorRepository;
 
-        public async Task<Result<FornecedorDto>> CadastrarAsync(string nome, string cnpj)
+        public async Task<Result<FornecedorDto>> CadastrarAsync(string nome, string cnpj, string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<FornecedorDto>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             if (await _fornecedorRepository.ExistePorCnpjAsync(cnpj))
                 return Result<FornecedorDto>.Fail(400, "Já existe um fornecedor com este CNPJ.", null);
 
@@ -35,8 +43,13 @@ namespace TransportApex.Application.UseCases.Fornecedores.Services
             return Result<FornecedorDto>.Ok(fornecedorDto, 201);
         }
 
-        public async Task<Result<IEnumerable<ListaFornecedorDto>>> ListarAsync()
+        public async Task<Result<IEnumerable<ListaFornecedorDto>>> ListarAsync(string idUsuario, Role? role)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario) || role is null || role != Role.Admin)
+            {
+                return Result<IEnumerable<ListaFornecedorDto>>.Fail(403, Constantes.MensagemAcessoNegadoPerfil, null);
+            }
+
             var fornecedores = await _fornecedorRepository.ObterTodosAsync();
 
             var fornecedoresDto = fornecedores

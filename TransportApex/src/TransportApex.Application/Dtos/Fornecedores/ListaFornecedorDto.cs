@@ -1,6 +1,4 @@
-﻿using TransportApex.Domain.ValueObjects;
-
-namespace TransportApex.Application.Dtos.Fornecedores
+﻿namespace TransportApex.Application.Dtos.Fornecedores
 {
     public class ListaFornecedorDto
     {

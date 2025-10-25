@@ -1,4 +1,5 @@
-﻿using Apex.Shared.Settings;
+﻿using Apex.Shared.Interfaces;
+using Apex.Shared.Settings;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using TransportApex.Application.Common.Constants;
+using TransportApex.WebApi.Services;
 
 namespace TransportApex.WebApi;
 
@@ -13,9 +15,11 @@ public static class DependencyInjection
 {
     public static void AddWebServices(this IHostApplicationBuilder builder)
     {
+
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         builder.Services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);

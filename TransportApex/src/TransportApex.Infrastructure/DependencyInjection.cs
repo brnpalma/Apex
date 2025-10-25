@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.UseCases.Entregas.Services;
 using TransportApex.Application.UseCases.Fornecedores.Services;
+using TransportApex.Application.UseCases.Produtos.Services;
 using TransportApex.Infrastructure.Persistence;
 using TransportApex.Infrastructure.Repositories;
 

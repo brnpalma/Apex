@@ -1,13 +1,17 @@
 ﻿using Moq;
 using TransportApex.Application.Common.Interfaces;
-using TransportApex.Application.UseCases.Entregas.Services;
+using TransportApex.Application.UseCases.Produtos.Services;
 using TransportApex.Domain.Entities;
+using Apex.Shared.Enums;
 
 namespace TransportApex.Application.UnitTests
 {
     [TestClass]
     public class ProdutoServiceTests
     {
+        private const string AdminUserId = "test-admin";
+        private const Role AdminRole = Role.Admin;
+
         private Mock<IProdutoRepository> _produtoRepo = null!;
         private ProdutoService _service = null!;
 
@@ -23,7 +27,7 @@ namespace TransportApex.Application.UnitTests
         {
             _produtoRepo.Setup(r => r.ExistePorNomeAsync(It.IsAny<string>())).ReturnsAsync(true);
 
-            var result = await _service.CadastrarAsync("Nome", 1m);
+            var result = await _service.CadastrarAsync("Nome", 1m, AdminUserId, AdminRole);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(400, result.Status);
@@ -34,7 +38,7 @@ namespace TransportApex.Application.UnitTests
         {
             _produtoRepo.Setup(r => r.ExistePorNomeAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-            var result = await _service.CadastrarAsync("", 0m);
+            var result = await _service.CadastrarAsync("", 0m, AdminUserId, AdminRole);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(400, result.Status);
@@ -48,7 +52,7 @@ namespace TransportApex.Application.UnitTests
                 .Callback<Produto>(p => p.Id = 99)
                 .Returns(Task.CompletedTask);
 
-            var result = await _service.CadastrarAsync("Produto Teste", 1.5m);
+            var result = await _service.CadastrarAsync("Produto Teste", 1.5m, AdminUserId, AdminRole);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(201, result.Status);
@@ -66,13 +70,14 @@ namespace TransportApex.Application.UnitTests
 
             _produtoRepo.Setup(r => r.ObterTodosAsync()).ReturnsAsync(new List<Produto> { p1, p2 });
 
-            var result = await _service.ListarAsync();
+            var result = await _service.ListarAsync(AdminUserId, AdminRole);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(200, result.Status);
             var list = result.Data!.ToList();
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual("P1", list[0].Descricao);
+            Assert.AreEqual(2, list[1].Id);
         }
     }
 }

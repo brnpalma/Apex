@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.UseCases.Entregas.Services;
+using TransportApex.Application.UseCases.Fornecedores.Services;
+using TransportApex.Application.UseCases.Produtos.Services;
 
 namespace TransportApex.Application;
 
@@ -12,6 +14,7 @@ public static class DependencyInjection
     {
         builder.Services.AddScoped<IProdutoService, ProdutoService>();
         builder.Services.AddScoped<IEntregaService, EntregaService>();
+        builder.Services.AddScoped<IFornecedorService, FornecedorService>();
 
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

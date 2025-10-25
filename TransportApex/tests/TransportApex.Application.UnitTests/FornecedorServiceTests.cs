@@ -3,6 +3,7 @@ using TransportApex.Application.Common.Interfaces;
 using TransportApex.Application.UseCases.Fornecedores.Services;
 using TransportApex.Domain.Entities;
 using TransportApex.Domain.ValueObjects;
+using Apex.Shared.Enums;
 
 namespace TransportApex.Application.UnitTests
 {
@@ -24,7 +25,7 @@ namespace TransportApex.Application.UnitTests
         {
             _fornecedorRepo.Setup(r => r.ExistePorCnpjAsync(It.IsAny<string>())).ReturnsAsync(true);
 
-            var result = await _service.CadastrarAsync("Nome", "00.000.000/0000-00");
+            var result = await _service.CadastrarAsync("Nome", "00.000.000/0000-00", "user-1", Role.Admin);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(400, result.Status);
@@ -35,7 +36,7 @@ namespace TransportApex.Application.UnitTests
         {
             _fornecedorRepo.Setup(r => r.ExistePorCnpjAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-            var result = await _service.CadastrarAsync("Nome", "123");
+            var result = await _service.CadastrarAsync("Nome", "123", "user-1", Role.Admin);
 
             Assert.IsFalse(result.Sucesso);
             Assert.AreEqual(400, result.Status);
@@ -50,7 +51,7 @@ namespace TransportApex.Application.UnitTests
                 .Returns(Task.CompletedTask);
 
             var cnpjRaw = "11222333000181";
-            var result = await _service.CadastrarAsync("Fornecedor Z", cnpjRaw);
+            var result = await _service.CadastrarAsync("Fornecedor Z", cnpjRaw, "user-1", Role.Admin);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(201, result.Status);
@@ -68,7 +69,7 @@ namespace TransportApex.Application.UnitTests
 
             _fornecedorRepo.Setup(r => r.ObterTodosAsync()).ReturnsAsync(new List<Fornecedor> { f1, f2 });
 
-            var result = await _service.ListarAsync();
+            var result = await _service.ListarAsync("user-1", Role.Admin);
 
             Assert.IsTrue(result.Sucesso);
             Assert.AreEqual(200, result.Status);
