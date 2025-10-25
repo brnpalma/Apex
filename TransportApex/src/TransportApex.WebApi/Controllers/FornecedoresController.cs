@@ -38,6 +38,12 @@ namespace TransportApex.WebApi.Controllers
         public async Task<IActionResult> ListarFornecedores()
         {
             var result = await _sender.Send(new ListarFornecedoresRequest());
+
+            if (!result.Data.Any())
+            {
+                return Ok(new { Mensagem = "Nenhum fornecedor cadastrado.", });
+            }
+
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
     }

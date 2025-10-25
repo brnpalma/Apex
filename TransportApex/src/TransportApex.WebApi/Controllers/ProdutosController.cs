@@ -38,6 +38,12 @@ namespace TransportApex.WebApi.Controllers
         public async Task<IActionResult> ListarProdutos()
         {
             var result = await _sender.Send(new ListarProdutosRequest());
+
+            if (!result.Data.Any())
+            {
+                return Ok(new { Mensagem = "Nenhum produto cadastrado.", });
+            }
+
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
     }
