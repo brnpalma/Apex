@@ -8,13 +8,9 @@ Uma solução modular voltada para **gestão de entregas e transportadores**, de
 - Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger)
 - (Opcional) UI alternativa Scalar: [https://localhost:5001/scalar](https://localhost:5001/scalar)
 
----
-
 ## 🛠️ Setup automático
 
 Ao executar a aplicação (`dotnet run`), o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais como `dotnet ef database update` — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional.
-
----
 
 ## 🧭 Visão Geral  
 
