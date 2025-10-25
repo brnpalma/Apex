@@ -5,8 +5,18 @@ Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, prec
 Uma solução modular voltada para **gestão de entregas e transportadores**, desenvolvida com **Clean Architecture em .NET**, projetada para escalar com **camadas independentes e dependências invertidas**.
 
 ## 🔗 Rotas Importantes
-- Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger)
-- (Opcional) UI alternativa Scalar muito bonita e cheia de novos recursos: [https://localhost:5001/scalar](https://localhost:5001/scalar)
+
+### 🧩 AuthApex API
+- **Swagger UI:** [https://localhost:5001/swagger](https://localhost:5001/swagger)  
+- **Scalar UI (opcional):** [https://localhost:5001/scalar](https://localhost:5001/scalar)
+
+### 🚚 TransportApex API
+- **Swagger UI:** [https://localhost:5112/swagger](https://localhost:5112/swagger)  
+- **Scalar UI (opcional):** [https://localhost:5112/scalar](https://localhost:5112/scalar)
+
+> 💡 **Observação:**  
+> A interface **Scalar** oferece uma experiência visual muito mais agradável e intuitiva que o Swagger tradicional — vale a pena explorar para testar e visualizar as APIs de forma moderna e fluida.
+
 
 ## 🛠️ Setup automático
 
