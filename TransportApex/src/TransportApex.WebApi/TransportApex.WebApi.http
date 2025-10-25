@@ -1,6 +1,0 @@
-@TransportApex.WebApi_HostAddress = http://localhost:5188
-
-GET {{TransportApex.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

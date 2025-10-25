@@ -1,4 +1,5 @@
-﻿using AuthApex.Domain.ValueObjects;
+﻿using Apex.Shared.Enums;
+using AuthApex.Domain.ValueObjects;
 
 namespace AuthApex.Domain.Entities
 {
@@ -7,7 +8,7 @@ namespace AuthApex.Domain.Entities
         public int Id { get; set; }
         public Senha SenhaHash { get; set; }
         public Email Email { get; set; }
-        public string Role { get; set; }
+        public Role Role { get; set; }
 
     }
 }

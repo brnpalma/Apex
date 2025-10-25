@@ -1,5 +1,5 @@
-﻿using AuthApex.Application.Auth.Dtos;
-using AuthApex.Application.Auth.Responses;
+﻿using Apex.Shared.Results;
+using AuthApex.Application.Dtos.Autenticacao;
 
 namespace AuthApex.Application.Common.Interfaces
 {

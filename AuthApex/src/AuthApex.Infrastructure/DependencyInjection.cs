@@ -1,6 +1,6 @@
-﻿using AuthApex.Application.Auth.Services;
+﻿using Apex.Shared.Settings;
 using AuthApex.Application.Common.Interfaces;
-using AuthApex.Application.Common.Settings;
+using AuthApex.Application.UseCases.Autenticacao.Services;
 using AuthApex.Domain.Entities;
 using AuthApex.Infrastructure.Persistence;
 using AuthApex.Infrastructure.Repositories;
@@ -17,10 +17,10 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("ApexDb");
-        Guard.Against.Null(connectionString, message: "Connection string 'ApexDb' não encontrada.");
+        var connectionString = builder.Configuration.GetConnectionString("AutenticacaoApexDb");
+        Guard.Against.Null(connectionString, message: "Connection string 'AutenticacaoApexDb' não encontrada.");
 
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        builder.Services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(connectionString));
 
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));

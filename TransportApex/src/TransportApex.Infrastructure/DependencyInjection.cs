@@ -1,14 +1,13 @@
-﻿using TransportApex.Application.Common.Interfaces;
-using TransportApex.Domain.Constants;
-using TransportApex.Infrastructure.Data;
-using TransportApex.Infrastructure.Data.Interceptors;
-using TransportApex.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Apex.Shared.Settings;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using TransportApex.Application.Common.Interfaces;
+using TransportApex.Application.UseCases.Entregas.Services;
+using TransportApex.Application.UseCases.Fornecedores.Services;
+using TransportApex.Infrastructure.Persistence;
+using TransportApex.Infrastructure.Repositories;
 
 namespace TransportApex.Infrastructure;
 
@@ -16,39 +15,26 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("ApexDb");
-        Guard.Against.Null(connectionString, message: "Connection string 'ApexDb' not found.");
+        var connectionString = builder.Configuration.GetConnectionString("TransportApexDb");
+        Guard.Against.Null(connectionString, message: "Connection string 'TransportApexDb' não encontrada.");
 
-        builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+        builder.Services.AddDbContext<TransportDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
-        builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
-        {
-            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(connectionString);
-            options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
-        });
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
+        // Repositórios
+        builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+        builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+        builder.Services.AddScoped<IEntregaRepository, EntregaRepository>();
 
-        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-
-        builder.Services.AddScoped<ApplicationDbContextInitialiser>();
-
-        builder.Services.AddAuthentication()
-            .AddBearerToken(IdentityConstants.BearerScheme);
+        // Serviços de domínio / casos de uso
+        builder.Services.AddScoped<IFornecedorService, FornecedorService>();
+        builder.Services.AddScoped<IProdutoService, ProdutoService>();
+        builder.Services.AddScoped<IEntregaService, EntregaService>();
 
         builder.Services.AddAuthorizationBuilder();
 
-        builder.Services
-            .AddIdentityCore<ApplicationUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddApiEndpoints();
-
         builder.Services.AddSingleton(TimeProvider.System);
-        builder.Services.AddTransient<IIdentityService, IdentityService>();
-
-        builder.Services.AddAuthorization(options =>
-            options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
     }
 }

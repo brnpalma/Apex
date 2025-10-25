@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using AuthApex.Application.Auth.Services;
 using AuthApex.Application.Common.Interfaces;
+using AuthApex.Application.UseCases.Autenticacao.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

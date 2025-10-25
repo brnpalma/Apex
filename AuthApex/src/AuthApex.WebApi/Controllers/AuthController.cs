@@ -1,15 +1,15 @@
-﻿using AuthApex.Application.Auth.Commands.CadastrarUsuario;
-using AuthApex.Application.Auth.Commands.Login;
-using AuthApex.Application.Auth.Dtos;
-using AuthApex.Application.Auth.Responses;
+﻿using Apex.Shared.Results;
 using AuthApex.Application.Common.Constants;
+using AuthApex.Application.Dtos.Autenticacao;
+using AuthApex.Application.UseCases.Autenticacao.CadastrarUsuarios;
+using AuthApex.Application.UseCases.Autenticacao.GerarToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthApex.WebApi.Controllers
 {
     [ApiController]
-    [Route($"api/{Constantes.ApiVersion}")]
+    [Route($"api/{ConstantesAuth.ApiVersion}")]
     public class AuthController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;
@@ -21,7 +21,7 @@ namespace AuthApex.WebApi.Controllers
         [ProducesResponseType(typeof(Result<UsuarioDto>), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [EndpointDescription("Cria um novo usuário. Recebe dados de cadastro e retorna o usuário criado.")]
-        public async Task<IActionResult> Usuarios([FromBody] UsuarioRequest request)
+        public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioRequest request)
         {
             var result = await _sender.Send(request);
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
@@ -34,7 +34,7 @@ namespace AuthApex.WebApi.Controllers
         [ProducesResponseType(typeof(Result<TokenDto>), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [EndpointDescription("Autentica um usuário e gera um token JWT. Retorna o token e informações básicas da sessão.")]
-        public async Task<IActionResult> Tokens([FromBody] TokenRequest request)
+        public async Task<IActionResult> GerarToken([FromBody] TokenRequest request)
         {
             var result = await _sender.Send(request);
             return StatusCode(result.Status, result.Data is null ? result : result.Data);

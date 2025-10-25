@@ -47,6 +47,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportApex.Domain.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportApex.Infrastructure.IntegrationTests", "TransportApex\tests\TransportApex.Infrastructure.IntegrationTests\TransportApex.Infrastructure.IntegrationTests.csproj", "{168A2C02-ABB9-435D-BBE1-81FDB3539A69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5A707307-B863-4E68-BBF2-58BD2F94280C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apex.Shared", "Apex.Shared\Apex.Shared.csproj", "{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,10 @@ Global
 		{168A2C02-ABB9-435D-BBE1-81FDB3539A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{168A2C02-ABB9-435D-BBE1-81FDB3539A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{168A2C02-ABB9-435D-BBE1-81FDB3539A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +150,7 @@ Global
 		{8887F401-9DFD-40E2-A71A-959C7D74AFE2} = {3017F662-5A2A-4FEC-A705-2AD9CC728946}
 		{372940C3-56A4-47BD-A67F-F8A8F321722D} = {3017F662-5A2A-4FEC-A705-2AD9CC728946}
 		{168A2C02-ABB9-435D-BBE1-81FDB3539A69} = {3017F662-5A2A-4FEC-A705-2AD9CC728946}
+		{2C20BA24-709C-4BCF-A2FB-21C98F62E5E5} = {5A707307-B863-4E68-BBF2-58BD2F94280C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C73B41C0-1496-48FB-8B17-0136C20209C7}

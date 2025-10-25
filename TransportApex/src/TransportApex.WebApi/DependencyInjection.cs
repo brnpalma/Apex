@@ -1,11 +1,11 @@
-﻿using Azure.Identity;
-using TransportApex.Application.Common.Interfaces;
-using TransportApex.Infrastructure.Data;
+﻿using Apex.Shared.Settings;
+using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-
-using NSwag;
-using NSwag.Generation.Processors.Security;
-using TransportApex.WebApi.Services;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using TransportApex.Application.Common.Constants;
 
 namespace TransportApex.WebApi;
 
@@ -15,33 +15,99 @@ public static class DependencyInjection
     {
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddScoped<IUser, CurrentUser>();
-
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
-
-        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
 
         builder.Services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
         builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddOpenApiDocument((configure, sp) =>
+        builder.Services.AddSwaggerGen(c =>
         {
-            configure.Title = "TransportApex API";
-
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
+            c.SwaggerDoc("v1", new OpenApiInfo 
+            { 
+                Title = ConstantesTransport.ApiTitle, 
+                Version = "v1",
+                Description = ConstantesTransport.ApiDescription
             });
 
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira apenas o token JWT aqui (não precisa de 'Bearer ')."
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference 
+                        { 
+                            Type = ReferenceType.SecurityScheme, 
+                            Id = "Bearer" 
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
+
+        builder.Services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new()
+                {
+                    Title = ConstantesTransport.ApiTitle,
+                    Version = ConstantesTransport.ApiVersion,
+                    Description = ConstantesTransport.ApiDescription
+                };
+                return Task.CompletedTask;
+            });
+        });
+
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+        var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var token = context.Request.Headers["Authorization"].FirstOrDefault();
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                            token = token.Substring("Bearer ".Length).Trim();
+
+                        context.Token = token;
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
     }
 
