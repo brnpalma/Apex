@@ -5,8 +5,18 @@ Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, prec
 Uma solução modular voltada para **gestão de entregas e transportadores**, desenvolvida com **Clean Architecture em .NET**, projetada para escalar com **camadas independentes e dependências invertidas**.
 
 ## 🔗 Rotas Importantes
-- Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger)
-- (Opcional) UI alternativa Scalar muito bonita e cheia de novos recursos: [https://localhost:5001/scalar](https://localhost:5001/scalar)
+
+### 🧩 AuthApex API
+- **Swagger UI:** [https://localhost:5001/swagger](https://localhost:5001/swagger)  
+- **Scalar UI (opcional):** [https://localhost:5001/scalar](https://localhost:5001/scalar)
+
+### 🚚 TransportApex API
+- **Swagger UI:** [https://localhost:5112/swagger](https://localhost:5112/swagger)  
+- **Scalar UI (opcional):** [https://localhost:5112/scalar](https://localhost:5112/scalar)
+
+> 💡 **Observação:**  
+> A interface **Scalar** oferece uma experiência visual muito mais agradável e intuitiva que o Swagger tradicional — vale a pena explorar para testar e visualizar as APIs de forma moderna e fluida.
+
 
 ## 🛠️ Setup automático
 
@@ -101,6 +111,9 @@ Apex/
 5. **Strings de conexão** já estão devidamente configuradas para se conectar com seu SqlServer local.  
 6. **Acesse o Swagger UI ou Scalar** no navegador para testar os endpoints.  
 
+> 💡 **Importante:**  
+> Após a autenticação, para realizar requisições protegidas, não é necessário incluir o prefixo `Bearer` antes do token. Basta informar o JWT diretamente no campo de autorização. A aplicação já está preparada para interpretar o token de forma automática.
+
 
 ## 📐 Convenções e Boas Práticas  
 
@@ -127,5 +140,3 @@ Contribuições são bem-vindas!
 ## 👤 Contato  
 🔧 **Desenvolvedor:** Bruno Palma  
 📧 **E-mail:** [br88@outlook.com](br88@outlook.com)
-
----
