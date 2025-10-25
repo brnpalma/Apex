@@ -111,11 +111,9 @@ Apex/
 - 🗃️ **Organização rígida por responsabilidade:** mantendo a separação por camadas.  
 
 
-## 🔗 Dependências Externas  
-> Liste as principais bibliotecas aqui (ex: Entity Framework Core, AutoMapper, MediatR, etc).
->
 ## 📚 Referência de Boas Práticas - Dependências Externas 
 > Este projeto segue princípios de desenvolvimento limpo e legível inspirados no livro _Clean Code: A Handbook of Agile Software Craftsmanship_, de Robert C. Martin.
+
 
 ## 🤝 Contribuindo  
 
