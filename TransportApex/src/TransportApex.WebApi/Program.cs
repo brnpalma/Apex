@@ -1,9 +1,18 @@
-﻿using TransportApex.Application;
+﻿using Scalar.AspNetCore;
+using TransportApex.Application;
+using TransportApex.Application.Common.Constants;
 using TransportApex.Infrastructure;
-using TransportApex.Infrastructure.Data;
+using TransportApex.Infrastructure.Persistence;
 using TransportApex.WebApi;
+using TransportApex.WebApi.Filters;
+using TransportApex.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidateModelAttribute>();
+});
 
 builder.AddKeyVaultIfConfigured();
 builder.AddApplicationServices();
@@ -12,30 +21,37 @@ builder.AddWebServices();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseMiddleware<ExceptionMiddleware>();
+
+using (var scope = app.Services.CreateScope())
 {
-    await app.InitialiseDatabaseAsync();
-}
-else
-{
-    app.UseHsts();
+    var context = scope.ServiceProvider.GetRequiredService<TransportDbContext>();
+    await context.Database.EnsureCreatedAsync();
 }
 
-app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi(settings =>
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
 {
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", ConstantesTransport.ApiTitle);
+    c.RoutePrefix = "swagger";
 });
 
+app.MapOpenApi();
+app.MapScalarApiReference("/scalar", options =>
+{
+    options.Title = ConstantesTransport.ApiTitle;
+    options.Theme = ScalarTheme.Mars;
+});
 
-app.UseExceptionHandler(options => { });
+app.MapControllers();
 
-app.Map("/", () => Results.Redirect("/api"));
-
-app.Run();
-
-public partial class Program { }
+await app.RunAsync();

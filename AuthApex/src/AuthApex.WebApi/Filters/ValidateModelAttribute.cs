@@ -1,4 +1,4 @@
-﻿using AuthApex.Application.Auth.Responses;
+﻿using Apex.Shared.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

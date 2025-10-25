@@ -22,4 +22,9 @@
     <ProjectReference Include="..\TransportApex.Application\TransportApex.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

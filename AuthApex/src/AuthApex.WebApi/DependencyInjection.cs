@@ -20,28 +20,7 @@ public static class DependencyInjection
 
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = Constantes.ApiTitle, Version = "v1" });
-
-            //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //{
-            //    Name = "Authorization",
-            //    Type = SecuritySchemeType.ApiKey,
-            //    Scheme = "Bearer",
-            //    BearerFormat = "JWT",
-            //    In = ParameterLocation.Header,
-            //    Description = "Insira seu token JWT no campo abaixo."
-            //});
-
-            //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //{
-            //    {
-            //        new OpenApiSecurityScheme
-            //        {
-            //            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            //        },
-            //        Array.Empty<string>()
-            //    }
-            //});
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = ConstantesAuth.ApiTitle, Version = "v1" });
         });
 
         builder.Services.AddOpenApi(options =>
@@ -50,9 +29,9 @@ public static class DependencyInjection
             {
                 document.Info = new()
                 {
-                    Title = Constantes.ApiTitle,
-                    Version = Constantes.ApiVersion,
-                    Description = Constantes.ApiDescription
+                    Title = ConstantesAuth.ApiTitle,
+                    Version = ConstantesAuth.ApiVersion,
+                    Description = ConstantesAuth.ApiDescription
                 };
                 return Task.CompletedTask;
             });

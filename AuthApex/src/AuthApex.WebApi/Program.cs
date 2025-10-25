@@ -25,7 +25,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
     await context.Database.EnsureCreatedAsync();
 }
 
@@ -41,14 +41,14 @@ app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", Constantes.ApiTitle);
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", ConstantesAuth.ApiTitle);
     c.RoutePrefix = "swagger";
 });
 
 app.MapOpenApi();
 app.MapScalarApiReference("/scalar", options =>
 {
-    options.Title = Constantes.ApiTitle;
+    options.Title = ConstantesAuth.ApiTitle;
     options.Theme = ScalarTheme.Laserwave;
 });
 

@@ -1,11 +1,7 @@
 ﻿using Azure.Identity;
-using TransportApex.Application.Common.Interfaces;
-using TransportApex.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-
-using NSwag;
-using NSwag.Generation.Processors.Security;
-using TransportApex.WebApi.Services;
+using Microsoft.OpenApi.Models;
+using TransportApex.Application.Common.Constants;
 
 namespace TransportApex.WebApi;
 
@@ -15,33 +11,51 @@ public static class DependencyInjection
     {
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddScoped<IUser, CurrentUser>();
-
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddHealthChecks()
-            .AddDbContextCheck<ApplicationDbContext>();
-
-        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
 
         builder.Services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
         builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddOpenApiDocument((configure, sp) =>
+        builder.Services.AddSwaggerGen(c =>
         {
-            configure.Title = "TransportApex API";
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = ConstantesTransport.ApiTitle, Version = "v1" });
 
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Type = OpenApiSecuritySchemeType.ApiKey,
                 Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira seu token JWT no campo abaixo."
             });
 
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
+
+        builder.Services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new()
+                {
+                    Title = ConstantesTransport.ApiTitle,
+                    Version = ConstantesTransport.ApiVersion,
+                    Description = ConstantesTransport.ApiDescription
+                };
+                return Task.CompletedTask;
+            });
         });
     }
 

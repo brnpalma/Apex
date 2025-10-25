@@ -1,5 +1,5 @@
-﻿using AuthApex.Application.Common.Interfaces;
-using AuthApex.Application.Common.Settings;
+﻿using Apex.Shared.Settings;
+using AuthApex.Application.Common.Interfaces;
 using AuthApex.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -24,7 +24,7 @@ namespace AuthApex.Infrastructure.Services
                 [
                     new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                     new Claim(ClaimTypes.Email, usuario.Email.Endereco),
-                    new Claim(ClaimTypes.Role, usuario.Role)
+                    new Claim(ClaimTypes.Role, usuario.Role.ToString())
                 ]),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

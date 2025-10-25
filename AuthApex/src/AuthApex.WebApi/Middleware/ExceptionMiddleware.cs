@@ -1,5 +1,5 @@
-﻿using AuthApex.Application.Auth.Responses;
-using AuthApex.Application.Common.Constants;
+﻿using Apex.Shared.Constants;
+using Apex.Shared.Results;
 using System.Net;
 using System.Text.Json;
 

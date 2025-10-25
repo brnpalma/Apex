@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthApex.Infrastructure.Repositories
 {
-    public class UsuarioRepository(ApplicationDbContext dbContext) : IUsuarioRepository
+    public class UsuarioRepository(AuthDbContext dbContext) : IUsuarioRepository
     {
-        private readonly ApplicationDbContext _dbContext = dbContext;
+        private readonly AuthDbContext _dbContext = dbContext;
 
         public async Task<Usuario> ObterPorEmailAsync(string email) =>
             await _dbContext.Usuarios.SingleOrDefaultAsync(u => u.Email.Endereco == email);
