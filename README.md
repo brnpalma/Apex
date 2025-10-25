@@ -22,14 +22,12 @@ O projeto é dividido em **microsserviços independentes** — como:
 
 Essa separação permite **evolução contínua** sem comprometer a integridade da aplicação.
 
----
-
 ## 🧩 Requisitos e Tecnologias Principais  
 - 🖥️ **Linguagem:** C# (.NET 9.0)  
 - 🧱 **Estrutura da solução:** arquivo `Apex.sln` no nível raiz  
 - 🧮 **Organização modular:** múltiplos projetos representando as camadas da arquitetura limpa  
 
----
+
 7
 ## 🏗️ Arquitetura Limpa (Clean Architecture)
 
@@ -53,7 +51,6 @@ Essa separação permite **evolução contínua** sem comprometer a integridade 
 - Escalabilidade e adaptação a novas tecnologias.  
 - Clareza e separação de responsabilidades entre camadas.  
 
----
 
 ## 🗂️ Estrutura de Pastas  
 
@@ -94,7 +91,6 @@ Apex/
 └─ Apex.sln
 ```
 
----
 
 ## 🏃‍♂️ Como Executar  
 
@@ -108,7 +104,6 @@ Apex/
 5. **Configure** strings de conexão e variáveis de ambiente conforme o ambiente.  
 6. **Acesse o Swagger UI ou Scalar** no navegador para testar os endpoints.  
 
----
 
 ## 📐 Convenções e Boas Práticas  
 
@@ -118,12 +113,10 @@ Apex/
 - 🔄 **Use DTOs** para mapeamento entre UI e Domínio.  
 - 🗃️ **Organização rígida por responsabilidade:** mantenha separação de camadas.  
 
----
 
 ## 🔗 Dependências Externas  
 > Liste as principais bibliotecas aqui (ex: Entity Framework Core, AutoMapper, MediatR, etc).
 
----
 
 ## 🤝 Contribuindo  
 
@@ -133,13 +126,11 @@ Contribuições são bem-vindas!
 3. Faça commits claros e limpos.  
 4. Abra um **Pull Request** descrevendo suas alterações.
 
----
 
 ## 📜 Licença  
 Este projeto está licenciado sob os termos da **MIT License**.  
 > Consulte o arquivo `LICENSE` para mais detalhes.
 
----
 
 ## 👤 Contato  
 🔧 **Desenvolvedor:** Bruno Palma  
