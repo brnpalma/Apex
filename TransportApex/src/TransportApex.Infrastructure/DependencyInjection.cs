@@ -1,5 +1,4 @@
 ﻿using Apex.Shared.Settings;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,15 +23,15 @@ public static class DependencyInjection
 
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
+        // Repositórios
         builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
         builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
         builder.Services.AddScoped<IEntregaRepository, EntregaRepository>();
+
+        // Serviços de domínio / casos de uso
         builder.Services.AddScoped<IFornecedorService, FornecedorService>();
         builder.Services.AddScoped<IProdutoService, ProdutoService>();
         builder.Services.AddScoped<IEntregaService, EntregaService>();
-
-        //builder.Services.AddAuthentication()
-        //    .AddBearerToken(IdentityConstants.BearerScheme);
 
         builder.Services.AddAuthorizationBuilder();
 
