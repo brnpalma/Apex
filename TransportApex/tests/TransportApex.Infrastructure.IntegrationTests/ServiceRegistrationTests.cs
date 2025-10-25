@@ -12,7 +12,6 @@ namespace TransportApex.Infrastructure.IntegrationTests
         public void AddInfrastructureServices_RegistraServicosEsperados()
         {
             var builder = new HostApplicationBuilder();
-            // Provide a dummy connection string so Guard.Against.Null não lança
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
             {
                 { "ConnectionStrings:TransportApexDb", "Server=(local);Database=TransportTest;Trusted_Connection=True;" }
