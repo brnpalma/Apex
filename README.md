@@ -6,15 +6,15 @@ Uma solução modular voltada para **gestão de entregas e transportadores**, de
 
 ## 🔗 Rotas Importantes
 - Swagger (UI padrão): [https://localhost:5001/swagger](https://localhost:5001/swagger)
-- (Opcional) UI alternativa Scalar: [https://localhost:5001/scalar](https://localhost:5001/scalar)
+- (Opcional) UI alternativa Scalar muito bonita e cheia de novos recursos: [https://localhost:5001/scalar](https://localhost:5001/scalar)
 
 ## 🛠️ Setup automático
 
-Ao executar a aplicação (`dotnet run`), o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais como `dotnet ef database update` — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional.
+Ao executar a aplicação, o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional.
 
 ## 🧭 Visão Geral  
 
-A API fornece uma base sólida para operações de **autenticação, cadastro de usuários, gerenciamento de fornecedores e controle logístico**, garantindo **segurança, performance e confiabilidade** em cada requisição.
+A API fornece uma base sólida para operações de **autenticação, cadastro de usuários, cadastro e listagem de fornecedores, produtos e entregas**, garantindo **segurança, performance e confiabilidade** em cada requisição.
 
 O projeto é dividido em **microsserviços independentes** — como:
 - **AuthApex API** → responsável por autenticação e geração de tokens JWT  
@@ -23,12 +23,12 @@ O projeto é dividido em **microsserviços independentes** — como:
 Essa separação permite **evolução contínua** sem comprometer a integridade da aplicação.
 
 ## 🧩 Requisitos e Tecnologias Principais  
-- 🖥️ **Linguagem:** C# (.NET 9.0)  
+- 🖥️ **Linguagem:** C# (.NET 9.0)
+- 🖥️ **Banco de dados:** Sql Server
 - 🧱 **Estrutura da solução:** arquivo `Apex.sln` no nível raiz  
 - 🧮 **Organização modular:** múltiplos projetos representando as camadas da arquitetura limpa  
 
 
-7
 ## 🏗️ Arquitetura Limpa (Clean Architecture)
 
 ### ⚙️ Princípios adotados  
@@ -67,6 +67,12 @@ Apex/
 │     ├─ AuthApex.Application.UnitTests/
 │     ├─ AuthApex.Application.FunctionalTests/
 │     └─ AuthApex.Infrastructure.IntegrationTests/
+├─ Shared
+│  ├─ Apex.Shared/
+│  │  ├─ Constants/
+│  │  ├─ Enums/
+│  │  ├─ Results/
+│  │  ├─ Settings/
 ├─ TransportApex/
 │  ├─ src/
 │  │  ├─ TransportApex.Domain/
@@ -82,6 +88,7 @@ Apex/
 └─ README.md
 ```
 
+
 ## 🏃‍♂️ Como Executar  
 
 1. **Clone o repositório:**  
@@ -89,23 +96,23 @@ Apex/
    git clone https://github.com/brnpalma/Apex.git
    ```  
 2. **Abra a solução** `Apex.sln` no Visual Studio ou IDE compatível.  
-3. **Defina o projeto de inicialização** (por exemplo, `AuthApex.API`).  
+3. **Defina o projeto de inicialização**, um perfil chamado `WebApis` já foi criado com a seleção das duas APIs juntas, facilitando a execução.  
 4. **Restaure pacotes NuGet**, compile e execute.  
-5. **Configure** strings de conexão e variáveis de ambiente conforme o ambiente.  
+5. **Strings de conexão** já estão devidamente configuradas para se conectar com seu SqlServer local.  
 6. **Acesse o Swagger UI ou Scalar** no navegador para testar os endpoints.  
 
 
 ## 📐 Convenções e Boas Práticas  
 
-- ✳️ **Nomeação clara:** `Entidades` no Domínio e `UseCases` na Aplicação.  
-- 🧩 **Interfaces** iniciam com `I` (ex: `IUserRepository`).  
+- ✳️ **Nomeação clara:** `Entities` no Domínio e `UseCases` na Aplicação.  
+- 🧩 **Interfaces** iniciam com `I` (ex: `IUsuariorRepository`).  
 - 🚫 **Domínio nunca depende** diretamente de infraestrutura.  
 - 🔄 **Use DTOs** para mapeamento entre UI e Domínio.  
-- 🗃️ **Organização rígida por responsabilidade:** mantenha separação de camadas.  
+- 🗃️ **Organização rígida por responsabilidade:** mantendo a separação por camadas.  
 
 
-## 🔗 Dependências Externas  
-> Liste as principais bibliotecas aqui (ex: Entity Framework Core, AutoMapper, MediatR, etc).
+## 📚 Referência de Boas Práticas - Dependências Externas 
+> Este projeto segue princípios de desenvolvimento limpo e legível inspirados no livro _Clean Code: A Handbook of Agile Software Craftsmanship_, de Robert C. Martin.
 
 
 ## 🤝 Contribuindo  
@@ -117,14 +124,8 @@ Contribuições são bem-vindas!
 4. Abra um **Pull Request** descrevendo suas alterações.
 
 
-## 📜 Licença  
-Este projeto está licenciado sob os termos da **MIT License**.  
-> Consulte o arquivo `LICENSE` para mais detalhes.
-
-
 ## 👤 Contato  
 🔧 **Desenvolvedor:** Bruno Palma  
-📧 **E-mail:** seu-email@exemplo.com  
-🌐 **GitHub:** [@brnpalma](https://github.com/brnpalma)
+📧 **E-mail:** [br88@outlook.com](br88@outlook.com)
 
 ---
