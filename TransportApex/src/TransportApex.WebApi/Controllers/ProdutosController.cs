@@ -8,6 +8,7 @@ using TransportApex.Application.UseCases.Produtos.ListarProdutos;
 
 namespace TransportApex.WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route($"api/{ConstantesTransport.ApiVersion}")]
     public class ProdutosController(ISender sender) : ControllerBase

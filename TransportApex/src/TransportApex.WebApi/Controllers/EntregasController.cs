@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TransportApex.Application.Common.Constants;
 using TransportApex.Application.Dtos.Entregas;
-using TransportApex.Application.UseCases.Entregas.ConsultarEntregas;
+using TransportApex.Application.UseCases.Entregas.ListarEntregas;
 using TransportApex.Application.UseCases.Entregas.RegistrarEntrega;
 
 namespace TransportApex.WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route($"api/{ConstantesTransport.ApiVersion}")]
     public class EntregasController(ISender sender) : ControllerBase
@@ -33,10 +34,16 @@ namespace TransportApex.WebApi.Controllers
         [ProducesResponseType(typeof(Result<EntregaDto>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<EntregaDto>), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [EndpointDescription("Autentica um usuário e gera um token JWT. Retorna o token e informações básicas da sessão.")]
-        public async Task<IActionResult> ConsultarEntregas([FromBody] ConsultarEntregasRequest request)
+        [EndpointDescription("Retorna a lista de entregas cadastradas.")]
+        public async Task<IActionResult> ListarEntregas()
         {
-            var result = await _sender.Send(request);
+            var result = await _sender.Send(new ListarEntregasRequest());
+
+            if (!result.Data.Any())
+            {
+                return Ok(new { Mensagem = "Nenhuma entrega cadastrada.", });
+            }
+
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
     }

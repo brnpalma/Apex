@@ -11,6 +11,16 @@ namespace TransportApex.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Fornecedor>(builder =>
+            {
+                builder.OwnsOne(u => u.Cnpj, cnpj =>
+                {
+                    cnpj.Property(e => e.Numero)
+                         .HasColumnName("Cnpj")
+                         .IsRequired();
+                });
+            });
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TransportDbContext).Assembly);
         }
     }

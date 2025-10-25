@@ -8,6 +8,7 @@ using TransportApex.Application.UseCases.Fornecedores.ListarFornecedores;
 
 namespace TransportApex.WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route($"api/{ConstantesTransport.ApiVersion}")]
     public class FornecedoresController(ISender sender) : ControllerBase

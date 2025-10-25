@@ -17,8 +17,8 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("ApexDb");
-        Guard.Against.Null(connectionString, message: "Connection string 'ApexDb' não encontrada.");
+        var connectionString = builder.Configuration.GetConnectionString("AutenticacaoApexDb");
+        Guard.Against.Null(connectionString, message: "Connection string 'AutenticacaoApexDb' não encontrada.");
 
         builder.Services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(connectionString));

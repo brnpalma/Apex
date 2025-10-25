@@ -3,17 +3,15 @@
     public sealed class Entrega
     {
         public long Id { get; set; }
-        public long FornecedorId { get; set; }
-        public long ProdutoId { get; set; }
-        public DateTime DataRetirada { get; set; }
-        public DateTime DataEntrega { get; set; }
+        public Fornecedor Fornecedor { get; set; }
+        public Produto Produto { get; set; }
 
         private Entrega() { }
 
-        public Entrega(long fornecedorId, long produtoId)
+        public Entrega(Fornecedor fornecedorId, Produto produtoId)
         {
-            FornecedorId = fornecedorId;
-            ProdutoId = produtoId;
+            Fornecedor = fornecedorId;
+            Produto = produtoId;
         }
     }
 }

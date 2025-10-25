@@ -1,6 +1,10 @@
-﻿using Azure.Identity;
+﻿using Apex.Shared.Settings;
+using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using TransportApex.Application.Common.Constants;
 
 namespace TransportApex.WebApi;
@@ -20,7 +24,12 @@ public static class DependencyInjection
 
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = ConstantesTransport.ApiTitle, Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo 
+            { 
+                Title = ConstantesTransport.ApiTitle, 
+                Version = "v1",
+                Description = ConstantesTransport.ApiDescription
+            });
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
@@ -29,7 +38,7 @@ public static class DependencyInjection
                 Scheme = "Bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "Insira seu token JWT no campo abaixo."
+                Description = "Insira apenas o token JWT aqui (não precisa de 'Bearer ')."
             });
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -37,7 +46,11 @@ public static class DependencyInjection
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        Reference = new OpenApiReference 
+                        { 
+                            Type = ReferenceType.SecurityScheme, 
+                            Id = "Bearer" 
+                        }
                     },
                     Array.Empty<string>()
                 }
@@ -56,6 +69,45 @@ public static class DependencyInjection
                 };
                 return Task.CompletedTask;
             });
+        });
+
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+        var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var token = context.Request.Headers["Authorization"].FirstOrDefault();
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                            token = token.Substring("Bearer ".Length).Trim();
+
+                        context.Token = token;
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
     }
 
