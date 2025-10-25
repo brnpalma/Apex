@@ -4,5 +4,5 @@ using TransportApex.Application.Dtos.Fornecedores;
 
 namespace TransportApex.Application.UseCases.Fornecedores.ListarFornecedores
 {
-    public record ListarFornecedoresRequest() : IRequest<Result<IEnumerable<FornecedorDto>>>;
+    public record ListarFornecedoresRequest() : IRequest<Result<IEnumerable<ListaFornecedorDto>>>;
 }

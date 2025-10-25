@@ -6,6 +6,6 @@ namespace TransportApex.Application.Common.Interfaces
     public interface IProdutoService
     {
         Task<Result<ProdutoDto>> CadastrarAsync(string descricao, decimal peso);
-        Task<Result<IEnumerable<ProdutoDto>>> ListarAsync();
+        Task<Result<IEnumerable<ListaProdutoDto>>> ListarAsync();
     }
 }

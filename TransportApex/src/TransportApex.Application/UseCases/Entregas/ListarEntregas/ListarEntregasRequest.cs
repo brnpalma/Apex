@@ -4,5 +4,5 @@ using TransportApex.Application.Dtos.Entregas;
 
 namespace TransportApex.Application.UseCases.Entregas.ListarEntregas
 {
-    public record ListarEntregasRequest() : IRequest<Result<IEnumerable<EntregaDto>>>;
+    public record ListarEntregasRequest() : IRequest<Result<IEnumerable<ListaEntregaDto>>>;
 }

@@ -35,9 +35,9 @@ namespace TransportApex.WebApi.Controllers
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [EndpointDescription("Autentica um usuário e gera um token JWT. Retorna o token e informações básicas da sessão.")]
-        public async Task<IActionResult> ListarProdutos([FromBody] ListarProdutosRequest request)
+        public async Task<IActionResult> ListarProdutos()
         {
-            var result = await _sender.Send(request);
+            var result = await _sender.Send(new ListarProdutosRequest());
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
     }

@@ -5,11 +5,11 @@ using TransportApex.Application.Dtos.Fornecedores;
 
 namespace TransportApex.Application.UseCases.Fornecedores.ListarFornecedores
 {
-    public class ListarFornecedoresHandler(IFornecedorService fornecedorService) : IRequestHandler<ListarFornecedoresRequest, Result<IEnumerable<FornecedorDto>>>
+    public class ListarFornecedoresHandler(IFornecedorService fornecedorService) : IRequestHandler<ListarFornecedoresRequest, Result<IEnumerable<ListaFornecedorDto>>>
     {
         private readonly IFornecedorService _fornecedorService = fornecedorService;
 
-        public async Task<Result<IEnumerable<FornecedorDto>>> Handle(ListarFornecedoresRequest request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<ListaFornecedorDto>>> Handle(ListarFornecedoresRequest request, CancellationToken cancellationToken)
         {
             return await _fornecedorService.ListarAsync();
         }

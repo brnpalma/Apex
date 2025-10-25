@@ -6,6 +6,6 @@ namespace TransportApex.Application.Common.Interfaces
     public interface IEntregaService
     {
         Task<Result<EntregaDto>> RegistrarEntregaAsync(long fornecedorId, long produtoId);
-        Task<Result<IEnumerable<EntregaDto>>> ListarAsync();
+        Task<Result<IEnumerable<ListaEntregaDto>>> ListarAsync();
     }
 }

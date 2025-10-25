@@ -15,14 +15,19 @@ namespace TransportApex.Application.UseCases.Fornecedores.Services
             if (await _fornecedorRepository.ExistePorCnpjAsync(cnpj))
                 return Result<FornecedorDto>.Fail(400, "Já existe um fornecedor com este CNPJ.", null);
 
-            var fornecedor = new Fornecedor(nome, new Cnpj(cnpj));
+            if (!Cnpj.TryCreate(cnpj, out var cnpjVo, out var error))
+            {
+                return Result<FornecedorDto>.Fail(400, error ?? "CNPJ inválido.", null);
+            }
+
+            var fornecedor = new Fornecedor(nome, cnpjVo);
             await _fornecedorRepository.AdicionarAsync(fornecedor);
 
             var fornecedorDto = new FornecedorDto
             {
                 Id = fornecedor.Id,
                 Nome = fornecedor.Nome,
-                Cnpj = fornecedor.Cnpj,
+                Cnpj = fornecedor.Cnpj.Numero,
                 Mensagem = "Fornecedor cadastrado com sucesso",
                 Sucesso = true
             };
@@ -30,100 +35,20 @@ namespace TransportApex.Application.UseCases.Fornecedores.Services
             return Result<FornecedorDto>.Ok(fornecedorDto, 201);
         }
 
-        public async Task<Result<IEnumerable<FornecedorDto>>> ListarAsync()
+        public async Task<Result<IEnumerable<ListaFornecedorDto>>> ListarAsync()
         {
             var fornecedores = await _fornecedorRepository.ObterTodosAsync();
 
             var fornecedoresDto = fornecedores
-                .Select(f => new FornecedorDto 
+                .Select(f => new ListaFornecedorDto 
                 {
                     Id = f.Id, 
                     Nome = f.Nome, 
-                    Cnpj = f.Cnpj
+                    Cnpj = f.Cnpj.Numero
                 })
                 .ToList();
 
-            return Result<IEnumerable<FornecedorDto>>.Ok(fornecedoresDto, 200);
+            return Result<IEnumerable<ListaFornecedorDto>>.Ok(fornecedoresDto, 200);
         }
-
-        //public async Task<Result<UsuarioDto>> CadastrarUsuarioAsync(string email, string senha)
-        //{
-        //    if (!Email.TryCreate(email, out var emailVo, out var emailError))
-        //    {
-        //        return Result<UsuarioDto>.Fail(400, emailError!, null);
-        //    }
-
-        //    if (await _fornecedorRepository.ExistePorEmailAsync(emailVo.Endereco))
-        //    {
-        //        return Result<UsuarioDto>.Fail(400, "Já existe um usuário com o email informado.", null);
-        //    }
-
-        //    var usuario = new Usuario
-        //    {
-        //        Email = new Email(email),
-        //        Role = Role.Admin
-        //    };
-
-        //    if (!Senha.TryCreate(senha, out var senhaVo, out var senhaError))
-        //    {
-        //        return Result<UsuarioDto>.Fail(400, senhaError!, null);
-        //    }
-
-        //    usuario.SenhaHash = senhaVo;
-
-        //    await _fornecedorRepository.AdicionarAsync(usuario);
-
-        //    var usuarioDto = new UsuarioDto
-        //    {
-        //        IdUsuario = usuario.Id.ToString(),
-        //        Email = usuario.Email.Endereco,
-        //        Mensagem = "Usuário cadastrado com sucesso",
-        //        Sucesso = true
-        //    };
-
-        //    return Result<UsuarioDto>.Ok(usuarioDto, 201);
-        //}
-
-        //public async Task<Result<TokenDto>> LoginAsync(string email, string senha)
-        //{
-        //    var usuario = await _fornecedorRepository.ObterPorEmailAsync(email);
-
-        //    if (usuario is null)
-        //    {
-        //        return Result<TokenDto>.Fail(404, "Usuário não encontrado.", null);
-        //    }
-
-        //    var senhaVo = new Senha(usuario.SenhaHash.ValorHash);
-
-        //    if (!senhaVo.Verificar(senha))
-        //    {
-        //        return Result<TokenDto>.Fail(401, "Senha inválida.", null);
-        //    }
-
-        //    var token = new Token
-        //    {
-        //        IdUsuario = usuario.Id,
-        //        Role = usuario.Role,
-        //        Email = usuario.Email.Endereco,
-        //        TokenJwt = _tokenService.GerarToken(usuario)
-        //    };
-
-        //    var tokenDto = new TokenDto
-        //    {
-        //        Sucesso = true,
-        //        Mensagem = "Token gerado com sucesso.",
-        //        IdUsuario = usuario.Id,
-        //        Role = usuario.Role,
-        //        Email = usuario.Email.Endereco,
-        //        Token = token.TokenJwt
-        //    };
-
-        //    return Result<TokenDto>.Ok(tokenDto, 200);
-        //}
-
-        //public Task<bool> ValidarTokenAsync(string token)
-        //{
-        //    return Task.FromResult(_tokenService.ValidarToken(token));
-        //}
     }
 }

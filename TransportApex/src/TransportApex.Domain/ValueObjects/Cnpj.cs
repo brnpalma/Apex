@@ -17,7 +17,6 @@ namespace TransportApex.Domain.ValueObjects
                 return false;
             }
 
-            // remove máscara
             var digits = Regex.Replace(numero, @"[^\d]", "");
 
             if (digits.Length != 14)
@@ -26,13 +25,13 @@ namespace TransportApex.Domain.ValueObjects
                 return false;
             }
 
-            if (!IsValidCnpj(digits))
-            {
-                error = "CNPJ inválido.";
-                return false;
-            }
+            // Caso queira habilitar uma validação mais rigida do formato de cnpj:
+            //if (!IsValidCnpj(digits))
+            //{
+            //    error = "CNPJ inválido.";
+            //    return false;
+            //}
 
-            // formata com máscara padrão
             var formatted = Convert.ToUInt64(digits).ToString(@"00\.000\.000\/0000\-00");
             cnpjVo = new Cnpj(formatted);
             return true;
