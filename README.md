@@ -127,6 +127,5 @@ Contribuições são bem-vindas!
 ## 👤 Contato  
 🔧 **Desenvolvedor:** Bruno Palma  
 📧 **E-mail:** [br88@outlook.com](br88@outlook.com)
-🌐 **GitHub:** [@brnpalma](https://github.com/brnpalma)
 
 ---
