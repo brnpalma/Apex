@@ -68,8 +68,8 @@ Essa separação permite **evolução contínua** sem comprometer a integridade 
 Apex/
 ├─ AuthApex/
 │  ├─ src/
-│  │  ├─ AuthApex.Domain/
 │  │  ├─ AuthApex.Application/
+│  │  ├─ AuthApex.Domain/
 │  │  ├─ AuthApex.Infrastructure/
 │  │  └─ AuthApex.WebApi/
 │  └─ tests/
@@ -81,12 +81,13 @@ Apex/
 │  ├─ Apex.Shared/
 │  │  ├─ Constants/
 │  │  ├─ Enums/
+│  │  ├─ Interfaces/
 │  │  ├─ Results/
 │  │  ├─ Settings/
 ├─ TransportApex/
 │  ├─ src/
-│  │  ├─ TransportApex.Domain/
 │  │  ├─ TransportApex.Application/
+│  │  ├─ TransportApex.Domain/
 │  │  ├─ TransportApex.Infrastructure/
 │  │  └─ TransportApex.WebApi/
 │  └─ tests/
