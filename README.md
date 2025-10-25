@@ -111,6 +111,9 @@ Apex/
 5. **Strings de conexão** já estão devidamente configuradas para se conectar com seu SqlServer local.  
 6. **Acesse o Swagger UI ou Scalar** no navegador para testar os endpoints.  
 
+> 💡 **Importante:**  
+> Após a autenticação, para realizar requisições protegidas, não é necessário incluir o prefixo `Bearer` antes do token. Basta informar o JWT diretamente no campo de autorização. A aplicação já está preparada para interpretar o token de forma automática.
+
 
 ## 📐 Convenções e Boas Práticas  
 
