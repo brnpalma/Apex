@@ -5,5 +5,6 @@
         public const string ApiTitle = "AuthApex API";
         public const string ApiVersion = "v1";
         public const string ApiDescription = "API voltada ao cadastro de usuário, login e validação de token.";
+        public const string MensagemFalhaPadrao = "Identificamos um erro interno inesperado. A equipe técnica foi alertada automaticamente e já está analisando o ocorrido.";
     }
 }

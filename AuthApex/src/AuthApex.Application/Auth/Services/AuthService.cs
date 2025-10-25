@@ -1,50 +1,84 @@
 ﻿using AuthApex.Application.Auth.Dtos;
+using AuthApex.Application.Auth.Responses;
 using AuthApex.Application.Common.Interfaces;
 using AuthApex.Domain.Entities;
+using AuthApex.Domain.Enums;
 using AuthApex.Domain.ValueObjects;
-using Microsoft.AspNetCore.Identity;
 
 namespace AuthApex.Application.Auth.Services
 {
-    public class AuthService(IUsuarioRepository usuarioRepository,
-                       IPasswordHasher<Usuario> passwordHasher,
-                       ITokenService tokenService) : IAuthService
+    public class AuthService(IUsuarioRepository usuarioRepository, ITokenService tokenService) : IAuthService
     {
         private readonly IUsuarioRepository _usuarioRepository = usuarioRepository;
-        private readonly IPasswordHasher<Usuario> _passwordHasher = passwordHasher;
         private readonly ITokenService _tokenService = tokenService;
 
-        public async Task<CadastrarUsuarioResultDto> CadastrarUsuarioAsync(string email, string senha)
+        public async Task<Result<UsuarioDto>> CadastrarUsuarioAsync(string email, string senha)
         {
-            if (await _usuarioRepository.ExistePorEmailAsync(email))
-                throw new Exception("Usuário já existe");
+            if (!Email.TryCreate(email, out var emailVo, out var emailError))
+            {
+                return Result<UsuarioDto>.Fail(400, emailError!, null);
+            }
 
-            var usuario = new Usuario { Email = new Email(email) };
-            usuario.PasswordHash = _passwordHasher.HashPassword(usuario, senha);
+            if (await _usuarioRepository.ExistePorEmailAsync(emailVo.Endereco))
+            {
+                return Result<UsuarioDto>.Fail(400, "Já existe um usuário com o email informado.", null);
+            }
+
+            var usuario = new Usuario
+            {
+                Email = new Email(email),
+                Role = Role.Admin.ToString()
+            };
+
+            if (!Senha.TryCreate(senha, out var senhaVo, out var senhaError))
+            {
+                return Result<UsuarioDto>.Fail(400, senhaError!, null);
+            }
+
+            usuario.SenhaHash = senhaVo;
 
             await _usuarioRepository.AdicionarAsync(usuario);
 
-            return new CadastrarUsuarioResultDto
+            var usuarioDto = new UsuarioDto
             {
                 IdUsuario = usuario.Id.ToString(),
-                Email = usuario.Email.Endereco
+                Email = usuario.Email.Endereco,
+                Mensagem = "Usuário cadastrado com sucesso",
+                Sucesso = true
             };
+
+            return Result<UsuarioDto>.Ok(usuarioDto, 201);
         }
 
-        public async Task<LoginResultDto> LoginAsync(string email, string senha)
+        public async Task<Result<TokenDto>> LoginAsync(string email, string senha)
         {
-            var usuario = await _usuarioRepository.ObterPorEmailAsync(email) 
-                ?? throw new ArgumentException("Usuário não encontrado");
+            var usuario = await _usuarioRepository.ObterPorEmailAsync(email);
 
-            var result = _passwordHasher.VerifyHashedPassword(usuario, usuario.PasswordHash, senha);
+            if (usuario is null)
+            {
+                return Result<TokenDto>.Fail(404, "Usuário não encontrado.", null);
+            }
+
+            var senhaVo = new Senha(usuario.SenhaHash.ValorHash);
+
+            if (!senhaVo.Verificar(senha))
+            {
+                return Result<TokenDto>.Fail(401, "Senha inválida.", null);
+            }
 
             var token = _tokenService.GerarToken(usuario);
 
-            return new LoginResultDto
+            var tokenDto = new TokenDto
             {
-                Token = token,
-                Email = usuario.Email.Endereco
+                Sucesso = true,
+                Mensagem = "Token gerado com sucesso.",
+                IdUsuario = usuario.Id,
+                Role = usuario.Role,
+                Email = usuario.Email.Endereco,
+                Token = token
             };
+
+            return Result<TokenDto>.Ok(tokenDto, 200);
         }
 
         public Task<bool> ValidarTokenAsync(string token)

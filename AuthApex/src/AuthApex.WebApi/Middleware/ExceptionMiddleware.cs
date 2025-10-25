@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using AuthApex.Application.Auth.Responses;
+using AuthApex.Application.Common.Constants;
+using System.Net;
 using System.Text.Json;
 
 namespace AuthApex.WebApi.Middleware
@@ -39,17 +41,15 @@ namespace AuthApex.WebApi.Middleware
 
                 default:
                     status = HttpStatusCode.InternalServerError; // 500
+                    message = Constantes.MensagemFalhaPadrao;
                     break;
             }
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
 
-            var response = JsonSerializer.Serialize(new
-            {
-                error = message,
-                statusCode = context.Response.StatusCode
-            });
+            var response = JsonSerializer.Serialize(Result<string>
+                .Fail(context.Response.StatusCode, message, null));
 
             return context.Response.WriteAsync(response);
         }

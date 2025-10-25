@@ -1,54 +1,43 @@
 ﻿using AuthApex.Application.Auth.Commands.CadastrarUsuario;
 using AuthApex.Application.Auth.Commands.Login;
+using AuthApex.Application.Auth.Dtos;
+using AuthApex.Application.Auth.Responses;
+using AuthApex.Application.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthApex.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route($"api/{Constantes.ApiVersion}")]
     public class AuthController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;
 
-        /// <summary>
-        /// Cadastro de novo usuário.
-        /// </summary>
-        /// <param name="command">Dados de registro</param>
-        /// <returns>Usuário cadastrado ou mensagem de erro</returns>
         [AllowAnonymous]
-        [HttpPost("cadastrar")]
-        [EndpointDescription("Cadastro de novo usuário.")]
-        public async Task<IActionResult> Cadastrar([FromBody] CadastrarUsuarioCommand command)
+        [HttpPost("usuarios")]
+        [ProducesResponseType(typeof(UsuarioDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Result<UsuarioDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<UsuarioDto>), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [EndpointDescription("Cria um novo usuário. Recebe dados de cadastro e retorna o usuário criado.")]
+        public async Task<IActionResult> Usuarios([FromBody] UsuarioRequest request)
         {
-            var result = await _sender.Send(command);
-
-            if (!result.Sucesso)
-            {
-                return BadRequest(new { result.Retorno });
-            }
-
-            return Ok(result);
+            var result = await _sender.Send(request);
+            return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
 
-        /// <summary>
-        /// Login do usuário e geração de token JWT.
-        /// </summary>
-        /// <param name="command">Credenciais do usuário</param>
-        /// <returns>Token JWT</returns>
         [AllowAnonymous]
-        [HttpPost("login")]
-        [EndpointDescription("Login do usuário e geração de token JWT.")]
-        public async Task<IActionResult> Login([FromBody] LoginCommand command)
+        [HttpPost("auth/tokens")]
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<TokenDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<TokenDto>), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [EndpointDescription("Autentica um usuário e gera um token JWT. Retorna o token e informações básicas da sessão.")]
+        public async Task<IActionResult> Tokens([FromBody] TokenRequest request)
         {
-            var tokenResult = await _sender.Send(command);
-
-            if (tokenResult is null || string.IsNullOrWhiteSpace(tokenResult.Token))
-            {
-                return Unauthorized(new { Retorno = "As credenciais informadas são inválidas." });
-            }
-
-            return Ok(tokenResult);
+            var result = await _sender.Send(request);
+            return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
     }
 }
