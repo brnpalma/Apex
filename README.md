@@ -67,6 +67,12 @@ Apex/
 │     ├─ AuthApex.Application.UnitTests/
 │     ├─ AuthApex.Application.FunctionalTests/
 │     └─ AuthApex.Infrastructure.IntegrationTests/
+├─ Shared
+│  ├─ Apex.Shared/
+│  │  ├─ Constants/
+│  │  ├─ Enums/
+│  │  ├─ Results/
+│  │  ├─ Settings/
 ├─ TransportApex/
 │  ├─ src/
 │  │  ├─ TransportApex.Domain/
