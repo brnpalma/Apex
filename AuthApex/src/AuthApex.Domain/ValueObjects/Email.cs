@@ -2,19 +2,29 @@
 
 namespace AuthApex.Domain.ValueObjects
 {
-    public class Email
+    public class Email(string endereco)
     {
-        public string Endereco { get; }
+        public string Endereco { get; } = endereco;
 
-        public Email(string endereco)
+        public static bool TryCreate(string endereco, out Email? emailVo, out string? error)
         {
+            emailVo = null;
+            error = null;
+
             if (string.IsNullOrWhiteSpace(endereco))
-                throw new ArgumentException("Email não pode ser vazio.");
+            {
+                error = "Email não pode ser vazio.";
+                return false;
+            }
 
             if (!Regex.IsMatch(endereco, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                throw new ArgumentException("Email inválido.");
+            {
+                error = "Email inválido.";
+                return false;
+            }
 
-            Endereco = endereco;
+            emailVo = new Email(endereco);
+            return true;
         }
 
         public override bool Equals(object obj)

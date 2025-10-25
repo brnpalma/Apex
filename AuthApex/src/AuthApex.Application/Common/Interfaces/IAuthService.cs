@@ -1,10 +1,11 @@
 ﻿using AuthApex.Application.Auth.Dtos;
+using AuthApex.Application.Auth.Responses;
 
 namespace AuthApex.Application.Common.Interfaces
 {
     public interface IAuthService
     {
-        Task<CadastrarUsuarioResultDto> CadastrarUsuarioAsync(string email, string senha);
-        Task<LoginResultDto> LoginAsync(string email, string senha);
+        Task<Result<UsuarioDto>> CadastrarUsuarioAsync(string email, string senha);
+        Task<Result<TokenDto>> LoginAsync(string email, string senha);
     }
 }

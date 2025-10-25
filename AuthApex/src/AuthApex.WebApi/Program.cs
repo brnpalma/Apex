@@ -3,12 +3,16 @@ using AuthApex.Application.Common.Constants;
 using AuthApex.Infrastructure;
 using AuthApex.Infrastructure.Persistence;
 using AuthApex.WebApi;
+using AuthApex.WebApi.Filters;
 using AuthApex.WebApi.Middleware;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidateModelAttribute>();
+});
 
 builder.AddKeyVaultIfConfigured();
 builder.AddApplicationServices();
@@ -22,7 +26,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+    await context.Database.EnsureCreatedAsync();
 }
 
 app.UseHttpsRedirection();

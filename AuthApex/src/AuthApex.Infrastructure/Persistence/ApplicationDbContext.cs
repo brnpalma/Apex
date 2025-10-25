@@ -19,6 +19,16 @@ namespace AuthApex.Infrastructure.Persistence
                 });
             });
 
+            modelBuilder.Entity<Usuario>(builder =>
+            {
+                builder.OwnsOne(u => u.SenhaHash, senha =>
+                {
+                    senha.Property(e => e.ValorHash)
+                         .HasColumnName("SenhaHash")
+                         .IsRequired();
+                });
+            });
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }

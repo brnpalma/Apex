@@ -1,5 +1,7 @@
 ﻿using AuthApex.Application.Common.Interfaces;
+using AuthApex.Application.Common.Settings;
 using AuthApex.Domain.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,9 +9,9 @@ using System.Text;
 
 namespace AuthApex.Infrastructure.Services
 {
-    public class TokenService : ITokenService
+    public class TokenService(IOptions<JwtSettings> jwtSettings) : ITokenService
     {
-        private readonly string _secretKey = "sua_chave_secreta_aqui_muito_forte";
+        private readonly string _secretKey = jwtSettings.Value.SecretKey;
 
         public string GerarToken(Usuario usuario)
         {
@@ -21,7 +23,8 @@ namespace AuthApex.Infrastructure.Services
                 Subject = new ClaimsIdentity(
                 [
                     new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                    new Claim(ClaimTypes.Email, usuario.Email.Endereco)
+                    new Claim(ClaimTypes.Email, usuario.Email.Endereco),
+                    new Claim(ClaimTypes.Role, usuario.Role)
                 ]),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

@@ -22,27 +22,26 @@ public static class DependencyInjection
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = Constantes.ApiTitle, Version = "v1" });
 
-            // JWT configuration
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer",
-                BearerFormat = "JWT",
-                In = ParameterLocation.Header,
-                Description = "Insira seu token JWT no campo abaixo."
-            });
+            //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            //{
+            //    Name = "Authorization",
+            //    Type = SecuritySchemeType.ApiKey,
+            //    Scheme = "Bearer",
+            //    BearerFormat = "JWT",
+            //    In = ParameterLocation.Header,
+            //    Description = "Insira seu token JWT no campo abaixo."
+            //});
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                    },
-                    Array.Empty<string>()
-                }
-            });
+            //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            //{
+            //    {
+            //        new OpenApiSecurityScheme
+            //        {
+            //            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            //        },
+            //        Array.Empty<string>()
+            //    }
+            //});
         });
 
         builder.Services.AddOpenApi(options =>
