@@ -38,7 +38,15 @@ Essa separação permite **evolução contínua** sem comprometer a integridade 
 - 🖥️ **Linguagem:** C# (.NET 9.0)
 - 🖥️ **Banco de dados:** Sql Server
 - 🧱 **Estrutura da solução:** arquivo `Apex.sln` no nível raiz  
-- 🧮 **Organização modular:** múltiplos projetos representando as camadas da arquitetura limpa  
+- 🧮 **Organização modular:** múltiplos projetos representando as camadas da arquitetura limpa
+
+## 🔄 Sugestão para fluxo de uso
+- Criar um usuario (POST api/v1/usuarios)
+- Gerar Token (POST api/v1/auth/tokens)
+- Cadastrar Fornecedor (POST api/v1/fornecedores)
+- Cadastrar Produto (POST api/v1/produtos)
+- Cadastrar Entrega (POST api/v1/entregas)
+- Realizar consultas nas rotas GET (fornecedore, produtos e entregas)
 
 
 ## 🏗️ Arquitetura Limpa (Clean Architecture)
