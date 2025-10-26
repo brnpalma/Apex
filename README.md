@@ -1,4 +1,4 @@
-# 🏎️ Apex Transport API
+# Apex Transport API
 
 Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, precisão e estabilidade**, oferecendo uma estrutura **limpa, eficiente, testável e altamente manutenível** para o domínio de entregas. 
 
