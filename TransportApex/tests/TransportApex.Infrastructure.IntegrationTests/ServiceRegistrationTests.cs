@@ -19,6 +19,9 @@ namespace TransportApex.Infrastructure.IntegrationTests
 
             DependencyInjection.AddInfrastructureServices(builder);
 
+            // Register application services as well so service-layer interfaces are available.
+            Application.DependencyInjection.AddApplicationServices(builder);
+
             var provider = builder.Services.BuildServiceProvider();
 
             Assert.IsNotNull(provider.GetService(typeof(IFornecedorRepository)));

@@ -20,10 +20,13 @@ namespace AuthApex.Infrastructure.IntegrationTests
 
             DependencyInjection.AddInfrastructureServices(builder);
 
+            // Register application services so IAuthService is actually added to DI.
+            Application.DependencyInjection.AddApplicationServices(builder);
+
             var provider = builder.Services.BuildServiceProvider();
 
             var authService = provider.GetService(typeof(IAuthService));
-            Assert.IsNotNull(authService, "IAuthService deve estar registrado. Se falhar, verifique AddInfrastructureServices.");
+            Assert.IsNotNull(authService, "IAuthService deve estar registrado. Se falhar, verifique AddInfrastructureServices e AddApplicationServices.");
         }
     }
 }
