@@ -20,7 +20,7 @@ Uma solução modular voltada para **gestão de entregas e transportadores**, de
 
 ## 🛠️ Setup automático
 
-Ao executar a aplicação, o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional.
+Ao executar a aplicação, o banco de dados e suas tabelas são **criados automaticamente** via Entity Framework Core. Não é necessário rodar comandos manuais — as migrações são aplicadas na inicialização, facilitando o processo de clonagem e execução do projeto sem esforço adicional, já que este projeto é destinado apenas a testes em ambiente de desenvolvimento.
 
 ## 🧭 Visão Geral  
 
