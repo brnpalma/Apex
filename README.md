@@ -1,5 +1,7 @@
 ![Banner APEX](./assets/bannerApi.png)
+
 <img src="./assets/banner-apex.png" alt="Banner APEX" style="width:70%;" />
+
 # Apex Transport API
 
 Assim como no automobilismo, a Apex busca o ponto ideal entre **velocidade, precisão e estabilidade**, oferecendo uma estrutura **limpa, eficiente, testável e altamente manutenível** para o domínio de entregas. 
