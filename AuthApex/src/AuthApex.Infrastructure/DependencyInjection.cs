@@ -26,9 +26,8 @@ public static class DependencyInjection
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
         builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
-        builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
 
         builder.Services.AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);

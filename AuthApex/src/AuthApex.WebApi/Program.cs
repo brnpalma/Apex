@@ -25,8 +25,11 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-    await context.Database.EnsureCreatedAsync();
+    if (!app.Environment.IsEnvironment("IntegrationTests") && app.Environment.IsDevelopment())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+        await context.Database.EnsureCreatedAsync();
+    }
 }
 
 app.UseHttpsRedirection();

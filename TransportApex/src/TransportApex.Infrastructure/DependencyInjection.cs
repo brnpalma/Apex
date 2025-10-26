@@ -29,11 +29,6 @@ public static class DependencyInjection
         builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
         builder.Services.AddScoped<IEntregaRepository, EntregaRepository>();
 
-        // Serviços de domínio / casos de uso
-        builder.Services.AddScoped<IFornecedorService, FornecedorService>();
-        builder.Services.AddScoped<IProdutoService, ProdutoService>();
-        builder.Services.AddScoped<IEntregaService, EntregaService>();
-
         builder.Services.AddAuthorizationBuilder();
 
         builder.Services.AddSingleton(TimeProvider.System);
