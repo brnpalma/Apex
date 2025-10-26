@@ -1,6 +1,6 @@
 ![Banner APEX](./assets/bannerApi.png)
 
-<img src="./assets/banner-apex.png" alt="Banner APEX" style="width:70%;" />
+<img src="./assets/bannerApi.png" alt="Banner APEX" style="width:70%;" />
 
 # Apex Transport API
 
